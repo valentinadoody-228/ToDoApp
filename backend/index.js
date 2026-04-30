@@ -12,7 +12,20 @@ const app = express();
 
 //Middlewarw set up 
 app.use(express.json());
+
 app.use(cors());
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || origin.endsWith(".vercel.app")) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
+
+
 
 // --------------------- Mongo Setup ---------------//
 
